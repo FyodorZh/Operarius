@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
+        <Version>0.1.0-dev.1</Version>
+        <Title>Operarius</Title>
+        <Authors>Fyodor Zhmaev</Authors>
+        <Description>Tasks execution library</Description>
+        <Copyright>Copyright (c) Fyodor Zhmaev 2026</Copyright>
+        <PackageProjectUrl>https://github.com/FyodorZh/Operarius</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FyodorZh/Operarius.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>nuget.readme.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="nuget.readme.md" Pack="true" PackagePath="\" />
+        <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Actuarius.Concurrent" Version="0.1.0-dev.2" />
+      <PackageReference Include="Scriba" Version="0.2.0-dev.6" />
+    </ItemGroup>
+
+</Project>
