@@ -14,6 +14,7 @@ namespace Operarius
         private readonly ConcurrentQueueValve<PeriodicLogicManualDriver> mPendingToAppend;
 
         private readonly IPeriodicLogicDriver mDriver;
+        private readonly IDateTimeProvider _timeProvider;
         private ILogicDriverCtl? mDriverCtl;
 
         private readonly WorkTimeAggregator? mWorkAggregator;
@@ -26,15 +27,16 @@ namespace Operarius
 
         public int Count { get; private set; }
 
-        public PeriodicMultiLogicDriver(IPeriodicLogicDriver driver, IPerformanceMonitor? monitor = null)
+        public PeriodicMultiLogicDriver(IPeriodicLogicDriver driver, IDateTimeProvider timeProvider, IPerformanceMonitor? monitor = null)
         {
             mPendingToAppend = new ConcurrentQueueValve<PeriodicLogicManualDriver>(new TinyConcurrentQueue<PeriodicLogicManualDriver>(), d => d.StopAndTick());
 
             mDriver = driver;
+            _timeProvider = timeProvider;
             Log = StaticLogger.Instance;
             Count = 0;
 
-            mWorkAggregator = monitor != null ? new WorkTimeAggregator(monitor, 1) : null;
+            mWorkAggregator = monitor != null ? new WorkTimeAggregator(monitor, 1, timeProvider) : null;
             mStatisticsFlushPeriod = monitor?.UpdatePeriod ?? TimeSpan.Zero;
         }
 
@@ -72,7 +74,7 @@ namespace Operarius
         bool IPeriodicLogic.LogicStarted(ILogicDriverCtl driver)
         {
             mDriverCtl = driver;
-            mStatisticsFlushTime = HighResDateTime.UtcNow.Add(mStatisticsFlushPeriod);
+            mStatisticsFlushTime = _timeProvider.Now.Add(mStatisticsFlushPeriod);
             return true;
         }
 
@@ -81,7 +83,7 @@ namespace Operarius
             mTimer.Reset();
             mTimer.Start();
 
-            System.DateTime now = HighResDateTime.UtcNow;
+            System.DateTime now = _timeProvider.Now;
 
             while (mPendingToAppend.TryPop(out var driver))
             {

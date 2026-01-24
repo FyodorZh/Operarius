@@ -85,7 +85,7 @@ namespace Operarius
 
                 while (true)
                 {
-                    var now = HighResDateTime.UtcNow;
+                    var now = mOwner._timeProvider.Now;
 
                     IWorkStory? job = mOwner.Jobs.Extract(now);
                     if (job == null)
@@ -160,7 +160,7 @@ namespace Operarius
             public bool CheckForHung()
             {
                 var thread = mCurThread;
-                if (thread != null && mCurJobEndTime.Time <= HighResDateTime.UtcNow)
+                if (thread != null && mCurJobEndTime.Time <= DateTime.UtcNow)
                 {
                     return true;
                 }
@@ -177,6 +177,7 @@ namespace Operarius
 
         private readonly Action<IWorkStory, WorkstoryState> mOnFinish;
         private readonly Action<IWorkStory, Thread> mOnHung;
+        private readonly IDateTimeProvider _timeProvider;
 
         private readonly IConcurrentQueue<KeyValuePair<IWorkStory, WorkstoryState>> mFinished = new TinyConcurrentQueue<KeyValuePair<IWorkStory, WorkstoryState>>();
 
@@ -194,6 +195,7 @@ namespace Operarius
             DeltaTime tickPeriod,
             Action<IWorkStory, WorkstoryState> onFinish,
             Action<IWorkStory, Thread> onHung,
+            IDateTimeProvider timeProvider,
             IPerformanceMonitor? monitor = null)
         {
             mDriverSource = driverSource;
@@ -201,8 +203,9 @@ namespace Operarius
             mJobs = new JobsPool();
             mOnFinish = onFinish;
             mOnHung = onHung;
+            _timeProvider = timeProvider;
 
-            mWorkAggregator = monitor != null ? new WorkTimeAggregator(monitor, driverPoolSize) : null;
+            mWorkAggregator = monitor != null ? new WorkTimeAggregator(monitor, driverPoolSize, timeProvider) : null;
             mStatisticsFlushPeriod = monitor?.UpdatePeriod ?? TimeSpan.Zero;
 
             mTickPeriod = tickPeriod;
@@ -333,7 +336,7 @@ namespace Operarius
                 }
             }
 
-            var now = HighResDateTime.UtcNow;
+            var now = _timeProvider.Now;
             if (mStatisticsFlushTime <= now)
             {
                 mStatisticsFlushTime = now.Add(mStatisticsFlushPeriod);

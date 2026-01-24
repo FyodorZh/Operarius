@@ -19,10 +19,7 @@ namespace Operarius
         {
         }
 
-        public DateTime Now
-        {
-            get { return DateTime.UtcNow; }
-        }
+        public DateTime Now => DateTime.UtcNow;
     }
 
     public class NowDateTimeProvider : IDateTimeProvider
@@ -33,9 +30,6 @@ namespace Operarius
         {
         }
 
-        public DateTime Now
-        {
-            get { return DateTime.Now; }
-        }
+        public DateTime Now => DateTime.Now;
     }
 }

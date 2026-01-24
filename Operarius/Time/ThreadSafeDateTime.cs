@@ -4,7 +4,7 @@ namespace Operarius
 {
     public class ThreadSafeDateTime : IDateTimeProvider
     {
-        private long mTime;
+        private long _time;
 
         public ThreadSafeDateTime()
             : this(new DateTime())
@@ -19,19 +19,16 @@ namespace Operarius
         {
             get
             {
-                long time = System.Threading.Interlocked.Read(ref mTime);
+                long time = System.Threading.Interlocked.Read(ref _time);
                 return DateTime.FromBinary(time);
             }
             set
             {
                 long time = value.ToBinary();
-                System.Threading.Interlocked.Exchange(ref mTime, time);
+                System.Threading.Interlocked.Exchange(ref _time, time);
             }
         }
 
-        public DateTime Now
-        {
-            get { return Time; }
-        }
+        public DateTime Now => Time;
     }
 }

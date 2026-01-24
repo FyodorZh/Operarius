@@ -4,7 +4,7 @@ namespace Operarius
 {
     public struct Time : System.IComparable<Time>, IEquatable<Time>//, IDataStruct
     {
-        private int mTimeMs;
+        private int _timeMs;
 
         public static readonly Time Zero = new Time(0);
         public static readonly Time SecondInPast = new Time(-1000);
@@ -18,7 +18,7 @@ namespace Operarius
         private Time(double seconds) : this((int)System.Math.Round(seconds * 1000.0)) { }
         private Time(int milliseconds)
         {
-            mTimeMs = milliseconds;
+            _timeMs = milliseconds;
         }
 
         public static Time FromMiliseconds(int millisecdonds)
@@ -33,19 +33,19 @@ namespace Operarius
 
         public static Time Max(Time t1, Time t2)
         {
-            return new Time(System.Math.Max(t1.mTimeMs, t2.mTimeMs));
+            return new Time(System.Math.Max(t1._timeMs, t2._timeMs));
         }
 
         public static Time Min(Time t1, Time t2)
         {
-            return new Time(System.Math.Min(t1.mTimeMs, t2.mTimeMs));
+            return new Time(System.Math.Min(t1._timeMs, t2._timeMs));
         }
 
         public int MilliSeconds
         {
             get
             {
-                return mTimeMs;
+                return _timeMs;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Operarius
         {
             get
             {
-                return (double)(mTimeMs) / 1000.0;
+                return _timeMs / 1000.0;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Operarius
         {
             get
             {
-                return DeltaTime.FromMiliseconds(mTimeMs);
+                return DeltaTime.FromMiliseconds(_timeMs);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Operarius
         {
             get
             {
-                return mTimeMs == 0;
+                return _timeMs == 0;
             }
         }
 
@@ -77,48 +77,48 @@ namespace Operarius
         {
             get
             {
-                return mTimeMs == Infinity.mTimeMs;
+                return _timeMs == Infinity._timeMs;
             }
         }
 
         public int CompareTo(Time other)
         {
-            return mTimeMs.CompareTo(other.mTimeMs);
+            return _timeMs.CompareTo(other._timeMs);
         }
 
         public static bool operator <(Time t1, Time t2)
         {
-            return t1.mTimeMs < t2.mTimeMs;
+            return t1._timeMs < t2._timeMs;
         }
 
         public static bool operator >(Time t1, Time t2)
         {
-            return t1.mTimeMs > t2.mTimeMs;
+            return t1._timeMs > t2._timeMs;
         }
 
         public static bool operator <=(Time t1, Time t2)
         {
-            return t1.mTimeMs <= t2.mTimeMs;
+            return t1._timeMs <= t2._timeMs;
         }
 
         public static bool operator >=(Time t1, Time t2)
         {
-            return t1.mTimeMs >= t2.mTimeMs;
+            return t1._timeMs >= t2._timeMs;
         }
 
         public static bool operator ==(Time t1, Time t2)
         {
-            return t1.mTimeMs == t2.mTimeMs;
+            return t1._timeMs == t2._timeMs;
         }
 
         public static bool operator !=(Time t1, Time t2)
         {
-            return t1.mTimeMs != t2.mTimeMs;
+            return t1._timeMs != t2._timeMs;
         }
 
         public bool Equals(Time other)
         {
-            return mTimeMs == other.mTimeMs;
+            return _timeMs == other._timeMs;
         }
 
         public override bool Equals(object obj)
@@ -132,7 +132,7 @@ namespace Operarius
 
         public override int GetHashCode()
         {
-            return this.mTimeMs.GetHashCode();
+            return this._timeMs.GetHashCode();
         }
 
         public static Time operator +(Time time, DeltaTime dTime)
@@ -157,7 +157,7 @@ namespace Operarius
 
         public override string ToString()
         {
-            return "[T:" + mTimeMs + "]";
+            return "[T:" + _timeMs + "]";
         }
 
         // public void Serialize(ISerializer dst)

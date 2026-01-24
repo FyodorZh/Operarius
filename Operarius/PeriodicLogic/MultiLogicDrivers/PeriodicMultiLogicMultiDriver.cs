@@ -7,7 +7,7 @@ namespace Operarius
         private readonly PeriodicMultiLogicDriver[]? mBuckets;
         private readonly DeltaTime mPeriod;
 
-        public PeriodicMultiLogicMultiDriver(IPeriodicLogicDriver[] drivers)
+        public PeriodicMultiLogicMultiDriver(IPeriodicLogicDriver[] drivers, IDateTimeProvider timeProvider)
         {
             if (drivers == null || drivers.Length == 0)
             {
@@ -26,7 +26,7 @@ namespace Operarius
             mBuckets = new PeriodicMultiLogicDriver[drivers.Length];
             for (int i = 0; i < drivers.Length; ++i)
             {
-                mBuckets[i] = new PeriodicMultiLogicDriver(drivers[i]);
+                mBuckets[i] = new PeriodicMultiLogicDriver(drivers[i], timeProvider);
             }
         }
 
