@@ -6,7 +6,7 @@ namespace Operarius
     {
         public static readonly NullLogic Instance = new NullLogic();
         
-        public bool LogicStarted(ILogicDriverCtl driver)
+        public bool LogicStarted(IPeriodicLogicDriverCtl driver)
         {
             throw new InvalidOperationException(nameof(LogicStarted));
         }

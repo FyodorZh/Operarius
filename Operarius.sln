@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operarius", "Operarius\Operarius.csproj", "{EF9D9E73-6EF9-47E8-B8E3-7A46670CA573}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operarius.Tests", "Operarius.Tests\Operarius.Tests.csproj", "{DE273C8E-D9CE-43A0-BB0B-491C6D07D6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operarius.Tmp", "Operarius.Tmp\Operarius.Tmp.csproj", "{B8BE08D3-57F7-4CDD-97F7-291A04048DB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{EF9D9E73-6EF9-47E8-B8E3-7A46670CA573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF9D9E73-6EF9-47E8-B8E3-7A46670CA573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF9D9E73-6EF9-47E8-B8E3-7A46670CA573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE273C8E-D9CE-43A0-BB0B-491C6D07D6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE273C8E-D9CE-43A0-BB0B-491C6D07D6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE273C8E-D9CE-43A0-BB0B-491C6D07D6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE273C8E-D9CE-43A0-BB0B-491C6D07D6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8BE08D3-57F7-4CDD-97F7-291A04048DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BE08D3-57F7-4CDD-97F7-291A04048DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BE08D3-57F7-4CDD-97F7-291A04048DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BE08D3-57F7-4CDD-97F7-291A04048DB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

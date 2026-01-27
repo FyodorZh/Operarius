@@ -36,7 +36,6 @@
 
     <ItemGroup>
       <PackageReference Include="Actuarius.Concurrent" Version="0.1.0-dev.2" />
-      <PackageReference Include="Scriba" Version="0.2.0-dev.9" />
     </ItemGroup>
 
 </Project>

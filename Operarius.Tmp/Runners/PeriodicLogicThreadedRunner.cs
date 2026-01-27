@@ -16,7 +16,7 @@ namespace Operarius
             mOnTickDelay = onTickDelay;
         }
 
-        public ILogicDriverCtl? Run(IPeriodicLogic logicToRun, DeltaTime period)
+        public IPeriodicLogicDriverCtl? Run(IPeriodicLogic logicToRun, DeltaTime period)
         {
             var driver = new PeriodicLogicThreadedDriver(period, mMaxStackSizeKb, mOnTickDelay);
             if (driver.Start(logicToRun, mLogger))

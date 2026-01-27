@@ -9,7 +9,7 @@
             mDriver = driver;
         }
 
-        public ILogicDriverCtl? Run(IPeriodicLogic logicToRun, DeltaTime period)
+        public IPeriodicLogicDriverCtl? Run(IPeriodicLogic logicToRun, DeltaTime period)
         {
             return mDriver.Append(logicToRun, period);
         }

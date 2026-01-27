@@ -4,26 +4,19 @@ using Actuarius.Concurrent;
 namespace Operarius
 {
     /// <summary>
-    /// Бизнес логика реализует IPeriodicLogic для получения периодических квантов процессорного времени
+    /// Represents a contract for logic that is executed periodically, providing methods for initialization, periodic tasks,
+    /// and cleanup during its lifecycle.
     /// </summary>
-    public interface IPeriodicLogic
-    {
+    public interface IPeriodicLogic : ILogic<IPeriodicLogicDriverCtl>
+    {        
         /// <summary>
-        /// Срабатывает единожды перед прочими методами
+        /// Invoked periodically while the logic is in the running state.
         /// </summary>
-        /// <param name="driver"> Источник квантов. Тот кто выделяет процессорное время </param>
-        /// <returns> FALSE - логика не смогла инициализироваться. Будет вызван LogicStopped() </returns>
-        bool LogicStarted(ILogicDriverCtl driver);
-
-        /// <summary>
-        /// Срабатывает периодически после вызова LogicStarted()
-        /// </summary>
-        void LogicTick();
-
-        /// <summary>
-        /// Срабатывает единожды при завершении периодического процесса.
-        /// </summary>
-        void LogicStopped();
+        /// <remarks>
+        /// This method is called after <see cref="LogicStarted"/> has been successfully invoked
+        /// and continues to be executed at some intervals until <see cref="LogicStopped"/> is called.
+        /// </remarks>
+        void LogicTick(IPeriodicLogicDriverCtl driver);
     }
 
     public static class PeriodicLogicChecker
@@ -66,7 +59,7 @@ namespace Operarius
                 return (LogicState)state;
             }
 
-            bool IPeriodicLogic.LogicStarted(ILogicDriverCtl driver)
+            bool ILogic<IPeriodicLogicDriverCtl>.LogicStarted(IPeriodicLogicDriverCtl driver)
             {
                 bool res;
                 BeginCriticalSection(ref _flag);
@@ -82,17 +75,17 @@ namespace Operarius
                 return res;
             }
 
-            void IPeriodicLogic.LogicTick()
+            void IPeriodicLogic.LogicTick(IPeriodicLogicDriverCtl driver)
             {
                 BeginCriticalSection(ref _flag);
                 {
                     CheckState(LogicState.Started);
-                    _logic.LogicTick();
+                    _logic.LogicTick(driver);
                 }
                 EndCriticalSection(ref _flag);
             }
 
-            void IPeriodicLogic.LogicStopped()
+            void ILogic<IPeriodicLogicDriverCtl>.LogicStopped()
             {
                 BeginCriticalSection(ref _flag);
                 {

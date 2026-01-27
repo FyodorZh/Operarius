@@ -3,7 +3,7 @@ using Scriba;
 
 namespace Operarius
 {
-    public class PeriodicLogicManualDriver : IPeriodicLogicDriver, ILogicDriverCtl
+    public class PeriodicLogicManualDriver : IPeriodicLogicDriver, IPeriodicLogicDriverCtl
     {
         private enum State
         {
@@ -128,11 +128,11 @@ namespace Operarius
         }
 
         #region IPeriodicLogicDriver
-        public bool IsStarted => /*!mIntentionToStop &&*/mState == State.Started;
+        public bool IsRunning => /*!mIntentionToStop &&*/mState == State.Started;
 
         public ILogger Log => mLogger;
 
-        public bool InvokeLogic()
+        public bool AskToInvoke()
         {
             mInvokeIntention = true;
             if (mState == State.Started)

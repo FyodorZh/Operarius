@@ -72,7 +72,7 @@ namespace Operarius
             return true;
         }
 
-        public ILogicDriverCtl? Append(IPeriodicLogic logic, DeltaTime period)
+        public IPeriodicLogicDriverCtl? Append(IPeriodicLogic logic, DeltaTime period)
         {
             if (mBuckets != null)
             {

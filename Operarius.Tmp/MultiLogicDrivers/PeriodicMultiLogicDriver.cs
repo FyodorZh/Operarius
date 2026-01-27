@@ -15,7 +15,7 @@ namespace Operarius
 
         private readonly IPeriodicLogicDriver mDriver;
         private readonly IDateTimeProvider _timeProvider;
-        private ILogicDriverCtl? mDriverCtl;
+        private IPeriodicLogicDriverCtl? mDriverCtl;
 
         private readonly WorkTimeAggregator? mWorkAggregator;
         private System.TimeSpan mStatisticsFlushPeriod;
@@ -55,7 +55,7 @@ namespace Operarius
             }
         }
 
-        public ILogicDriverCtl? Append(IPeriodicLogic logic, DeltaTime period)
+        public IPeriodicLogicDriverCtl? Append(IPeriodicLogic logic, DeltaTime period)
         {
             if (mDriverCtl == null)
             {
@@ -71,7 +71,7 @@ namespace Operarius
             return null;
         }
 
-        bool IPeriodicLogic.LogicStarted(ILogicDriverCtl driver)
+        bool IPeriodicLogic.LogicStarted(IPeriodicLogicDriverCtl driver)
         {
             mDriverCtl = driver;
             mStatisticsFlushTime = _timeProvider.Now.Add(mStatisticsFlushPeriod);
@@ -95,7 +95,7 @@ namespace Operarius
             {
                 var logic = mLogics[i];
                 logic.Tick(now);
-                if (!logic.IsStarted)
+                if (!logic.IsRunning)
                 {
                     mLogics[i] = mLogics[lastPos];
                     mLogics[lastPos--] = null!;

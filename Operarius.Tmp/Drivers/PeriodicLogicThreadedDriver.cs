@@ -5,7 +5,7 @@ using Scriba;
 
 namespace Operarius
 {
-    public class PeriodicLogicThreadedDriver : IPeriodicLogicDriver, ILogicDriverCtl
+    public class PeriodicLogicThreadedDriver : IPeriodicLogicDriver, IPeriodicLogicDriverCtl
     {
         private readonly Action<int>? mOnTickDelay;
         private readonly DeltaTime mLogicQuantLength;
@@ -37,7 +37,7 @@ namespace Operarius
 
         public ILogger Log { get; private set; }
 
-        public bool IsStarted => mStarted;
+        public bool IsRunning => mStarted;
 
         public PeriodicLogicThreadedDriver(DeltaTime period, int maxStackSizeKb = 0, Action<int>? onTickDelay = null, string? threadName = null)
         {
@@ -120,7 +120,7 @@ namespace Operarius
             mStarted = false;
         }
 
-        public bool InvokeLogic()
+        public bool AskToInvoke()
         {
             if (mStarted)
             {

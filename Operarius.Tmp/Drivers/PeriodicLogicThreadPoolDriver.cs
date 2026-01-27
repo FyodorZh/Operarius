@@ -4,7 +4,7 @@ using Scriba;
 
 namespace Operarius
 {
-    public class PeriodicLogicThreadPoolDriver : IPeriodicLogicDriver, ILogicDriverCtl
+    public class PeriodicLogicThreadPoolDriver : IPeriodicLogicDriver, IPeriodicLogicDriverCtl
     {
         private readonly Action<int>? mOnTickDelay;
 
@@ -56,13 +56,13 @@ namespace Operarius
             return false;
         }
 
-        public bool IsStarted => CurrentState == State.Started;
+        public bool IsRunning => CurrentState == State.Started;
 
         public ILogger Log { get; private set; }
 
-        bool ILogicDriverCtl.InvokeLogic()
+        bool IPeriodicLogicDriverCtl.AskToInvoke()
         {
-            if (IsStarted)
+            if (IsRunning)
             {
                 var evt = mResetEvent;
                 if (evt != null)

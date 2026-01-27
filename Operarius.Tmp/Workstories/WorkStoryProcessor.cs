@@ -49,7 +49,7 @@ namespace Operarius
         {
             private readonly WorkStoryProcessor mOwner;
 
-            private volatile ILogicDriverCtl? mDriver;
+            private volatile IPeriodicLogicDriverCtl? mDriver;
 
             private volatile Thread? mCurThread;
             private readonly ThreadSafeDateTime mCurJobEndTime = new ThreadSafeDateTime();
@@ -67,7 +67,7 @@ namespace Operarius
                 mOwner = owner;
             }
 
-            public bool LogicStarted(ILogicDriverCtl driver)
+            public bool LogicStarted(IPeriodicLogicDriverCtl driver)
             {
                 mDriver = driver;
                 return true;
@@ -181,7 +181,7 @@ namespace Operarius
 
         private readonly IConcurrentQueue<KeyValuePair<IWorkStory, WorkstoryState>> mFinished = new TinyConcurrentQueue<KeyValuePair<IWorkStory, WorkstoryState>>();
 
-        private volatile ILogicDriverCtl? mDriver;
+        private volatile IPeriodicLogicDriverCtl? mDriver;
 
         private int mActiveJobsCount;
 
@@ -286,7 +286,7 @@ namespace Operarius
             }
         }
 
-        bool IPeriodicLogic.LogicStarted(ILogicDriverCtl driver)
+        bool IPeriodicLogic.LogicStarted(IPeriodicLogicDriverCtl driver)
         {
             mDriver = driver;
             mStatisticsFlushTime = DateTime.UtcNow.Add(mStatisticsFlushPeriod);

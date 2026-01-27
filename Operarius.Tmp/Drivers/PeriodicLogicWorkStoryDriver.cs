@@ -3,7 +3,7 @@ using Scriba;
 
 namespace Operarius
 {
-    public class PeriodicLogicWorkStoryDriver : IPeriodicLogicDriver, ILogicDriverCtl, IWorkStory
+    public class PeriodicLogicWorkStoryDriver : IPeriodicLogicDriver, IPeriodicLogicDriverCtl, IWorkStory
     {
         private readonly WorkStoryProcessor mProcessor;
         private readonly DeltaTime mPeriod;
@@ -51,7 +51,7 @@ namespace Operarius
                 var driver = mDriver;
                 if (driver != null)
                 {
-                    return !driver.IsStarted;
+                    return !driver.IsRunning;
                 }
                 return true;
             }
@@ -84,20 +84,20 @@ namespace Operarius
             }
         }
 
-        bool ILogicDriverCtl.IsStarted
+        bool ILogicDriverCtl.IsRunning
         {
             get {
                 var driver = mDriver;
-                return driver != null && driver.IsStarted;
+                return driver != null && driver.IsRunning;
             }
         }
 
-        bool ILogicDriverCtl.InvokeLogic()
+        bool IPeriodicLogicDriverCtl.AskToInvoke()
         {
             var driver = mDriver;
             if (driver != null)
             {
-                return driver.InvokeLogic();
+                return driver.AskToInvoke();
             }
 
             return false;
