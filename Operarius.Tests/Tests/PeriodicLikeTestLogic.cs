@@ -14,7 +14,7 @@ namespace Operarius.Tests
         public bool StopInvoked = false;
         
         
-        public bool LogicStarted(TLogicDriverCtl driver)
+        public virtual bool LogicStarted(TLogicDriverCtl driver)
         {
             StartInvoked = true;
             if (ErrorOnStart)
@@ -61,6 +61,30 @@ namespace Operarius.Tests
         {
             LogicTick(driver);
             return TimeSpan.FromMilliseconds(13);
+        }
+    }
+    
+    public class NonPeriodicTestLogic : PeriodicLikeTestLogic<INonPeriodicLogicDriverCtl>, INonPeriodicLogic
+    {
+        public override bool LogicStarted(INonPeriodicLogicDriverCtl driver)
+        {
+            bool res = base.LogicStarted(driver);
+            Task.Run(async () =>
+            {
+                await Task.Delay(10);
+                driver.RequestInvocation();
+            });
+            return res;
+        }
+
+        void INonPeriodicLogic.LogicTick(INonPeriodicLogicDriverCtl driver)
+        {
+            LogicTick(driver);
+            Task.Run(async () =>
+            {
+                await Task.Delay(10);
+                driver.RequestInvocation();
+            });
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Operarius
         private readonly Action<ILogic<TLogicDriverCtl>> _reportLogicStopped;
         private readonly Action<Exception> _reportError;
         
-        private readonly ConcurrentQueueValve<TManualLogicDriver> _driversToAdd;
+        private readonly ConcurrentUnorderedCollectionValve<TManualLogicDriver> _driversToAdd;
         private readonly PriorityQueue<DateTime, TManualLogicDriver> _drivers = new();
         private readonly List<TManualLogicDriver> _processedDrivers = new();
 
@@ -36,7 +36,7 @@ namespace Operarius
         {
             _reportLogicStopped = ReportLogicStopped;
             _reportError = ReportError;
-            _driversToAdd = new(new TinyConcurrentQueue<TManualLogicDriver>(), 
+            _driversToAdd = new(new SystemConcurrentUnorderedCollection<TManualLogicDriver>(), 
                 d => d.StopNow());
         }
         

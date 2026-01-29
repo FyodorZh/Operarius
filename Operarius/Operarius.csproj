@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>0.1.0-dev.2</Version>
+        <Version>0.2.0-dev.1</Version>
         <Title>Operarius</Title>
         <Authors>Fyodor Zhmaev</Authors>
         <Description>Tasks execution library</Description>
@@ -35,7 +35,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Actuarius.Concurrent" Version="0.1.0-dev.2" />
+      <PackageReference Include="Actuarius.Collections" Version="0.1.1-dev.1" />
+      <PackageReference Include="Actuarius.Concurrent" Version="0.1.1-dev.1" />
     </ItemGroup>
 
 </Project>
