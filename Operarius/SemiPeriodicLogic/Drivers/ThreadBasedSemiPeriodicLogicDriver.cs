@@ -19,7 +19,7 @@ namespace Operarius
         public event Action<ILogic<ISemiPeriodicLogicDriverCtl>>? LogicStopped;
         public event Action<Exception>? ErrorStream;
 
-        public ThreadBasedSemiPeriodicLogicDriver(IDateTimeProvider timeProvider, bool finishOnComplete)
+        public  ThreadBasedSemiPeriodicLogicDriver(IDateTimeProvider timeProvider, bool finishOnComplete)
         {
             _timeProvider = timeProvider;
             _finishOnComplete = finishOnComplete;

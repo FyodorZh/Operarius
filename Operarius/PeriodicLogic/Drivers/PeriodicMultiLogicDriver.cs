@@ -8,6 +8,10 @@ namespace Operarius
 
         public PeriodicMultiLogicDriver(TimeSpan period)
         {
+            if (period <= TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(nameof(period), "Period must be greater than zero.");
+            }
             _period = period;
         }
         
