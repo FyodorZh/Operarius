@@ -50,7 +50,12 @@ namespace Operarius.Tests
 
         private async Task DoTest(Func<TStartTickStop> logicFactory)
         {
-            await DoTest(logicFactory(), GetDriver());
+            var driver = GetDriver();
+            if (driver is not ManualPeriodicLogicDriver && driver is not ManualSemiPeriodicLogicDriver)
+            {
+                driver = new SingleJobLogicDriver<TDriverCtl>(driver);
+            }
+            await DoTest(logicFactory(), driver);
         }
 
         private async Task DoTest(PeriodicLikeTestLogic<TDriverCtl> logic, ILogicDriver<TDriverCtl> driver)
@@ -89,7 +94,7 @@ namespace Operarius.Tests
                     case ManualSemiPeriodicLogicDriver:
                         break;
                     default:
-                        await driver.Finish();
+                        await driver.WaitForFinish();
                         break;
                 }
                 return;
@@ -107,7 +112,7 @@ namespace Operarius.Tests
                     break;
                 default:
                     await tcs.Task;
-                    await driver.Finish();
+                    await driver.WaitForFinish();
                     break;
             }
             
