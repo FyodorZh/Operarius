@@ -11,12 +11,11 @@ namespace Operarius
         DriverIsNotActive
     }
 
-    public interface ILogicDriver<TLogicDriverCtl>
+    public interface ILogicDriver<TLogicDriverCtl> : ILogicRunner<TLogicDriverCtl>
         where TLogicDriverCtl : ILogicDriverCtl
     {
         event Action<ILogic<TLogicDriverCtl>> LogicStopped;
         event Action<Exception> ErrorStream;
-        LogicStartResult Start(ILogic<TLogicDriverCtl> logic);
         Task Finish();
         Task WaitForFinish();
     }

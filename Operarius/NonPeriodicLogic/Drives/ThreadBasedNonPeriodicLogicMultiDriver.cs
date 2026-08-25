@@ -85,7 +85,7 @@ namespace Operarius
             _finishTcs.SetResult(0);
         }
         
-        LogicStartResult ILogicDriver<INonPeriodicLogicDriverCtl>.Start(ILogic<INonPeriodicLogicDriverCtl> logic)
+        LogicStartResult ILogicRunner<INonPeriodicLogicDriverCtl>.Start(ILogic<INonPeriodicLogicDriverCtl> logic)
         {
             if (Volatile.Read(ref _intentionToDestroy) == 0)
             {
